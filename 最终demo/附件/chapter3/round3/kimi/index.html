@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精品课程报名 - 提升你的专业技能</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部强钩子标题 -->
+    <header class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">🚀 30天掌握核心技能，职场竞争力翻倍！</h1>
+            <p class="hero-subtitle">专为职场精英打造的实战课程，让你快速突破职业瓶颈</p>
+            <div class="countdown-timer">
+                <span class="timer-text">限时优惠，仅剩</span>
+                <span class="timer-number" id="countdown">24:00:00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 课程亮点 -->
+    <section class="highlights-section">
+        <div class="container">
+            <h2 class="section-title">为什么选择我们的课程？</h2>
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>实战教学</h3>
+                    <p>100%实战案例教学，学完即可应用到工作中，告别纯理论</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>小班精品</h3>
+                    <p>每期限额30人，1对1答疑指导，确保学习效果</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>权威认证</h3>
+                    <p>完成课程获得行业权威认证，提升职场竞争力</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 讲师介绍 -->
+    <section class="instructor-section">
+        <div class="container">
+            <h2 class="section-title">金牌讲师团队</h2>
+            <div class="instructor-card">
+                <div class="instructor-avatar">
+                    <img src="https://via.placeholder.com/120x120/23877B/FFFFFF?text=讲师" alt="金牌讲师">
+                </div>
+                <div class="instructor-info">
+                    <h3 class="instructor-name">张教授</h3>
+                    <p class="instructor-title">资深行业专家 · 15年实战经验</p>
+                    <p class="instructor-desc">
+                        曾任职于世界500强企业，拥有丰富的项目管理和团队建设经验。
+                        已帮助超过5000名学员成功提升职业技能，获得业界一致好评。
+                        擅长将复杂知识点简单化，让学员快速掌握核心技能。
+                    </p>
+                    <div class="instructor-achievements">
+                        <div class="achievement">
+                            <span class="achievement-number">5000+</span>
+                            <span class="achievement-label">成功学员</span>
+                        </div>
+                        <div class="achievement">
+                            <span class="achievement-number">98%</span>
+                            <span class="achievement-label">满意度</span>
+                        </div>
+                        <div class="achievement">
+                            <span class="achievement-number">15年</span>
+                            <span class="achievement-label">行业经验</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 报名表单 -->
+    <section class="registration-section">
+        <div class="container">
+            <div class="registration-card">
+                <div class="registration-header">
+                    <h2 class="section-title">立即报名</h2>
+                    <p class="registration-subtitle">限时优惠，原价¥2999，现在仅需¥1999</p>
+                    <div class="price-tag">
+                        <span class="original-price">¥2999</span>
+                        <span class="current-price">¥1999</span>
+                    </div>
+                </div>
+                <form class="registration-form" id="registrationForm">
+                    <div class="form-group">
+                        <label for="name">姓名 *</label>
+                        <input type="text" id="name" name="name" required placeholder="请输入您的姓名">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">手机 *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="请输入您的手机号码">
+                        <span class="error-message" id="phoneError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">公司</label>
+                        <input type="text" id="company" name="company" placeholder="请输入您的公司名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="position">职位</label>
+                        <input type="text" id="position" name="position" placeholder="请输入您的职位">
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">立即报名</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <p class="form-note">🔒 我们承诺保护您的隐私信息</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 精品课程平台. 保留所有权利.</p>
+            <p>客服热线：400-123-4567 | 工作时间：9:00-18:00</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

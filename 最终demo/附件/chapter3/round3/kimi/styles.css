@@ -1,0 +1,548 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 顶部英雄区域 */
+.hero-section {
+    background: linear-gradient(135deg, #23877B 0%, #1a6a5f 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><circle cx="20" cy="10" r="8" fill="url(%23a)"/><circle cx="80" cy="10" r="6" fill="url(%23a)"/></svg>') repeat;
+    opacity: 0.3;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+.countdown-timer {
+    background: rgba(255,255,255,0.2);
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.timer-text {
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.timer-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffeb3b;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* 课程亮点区域 */
+.highlights-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #23877B;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #23877B;
+    border-radius: 2px;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.highlight-card {
+    text-align: center;
+    padding: 40px 30px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.highlight-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(35, 135, 123, 0.15);
+    border-color: #23877B;
+}
+
+.highlight-icon {
+    width: 80px;
+    height: 80px;
+    background: #23877B;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 10px 20px rgba(35, 135, 123, 0.3);
+}
+
+.highlight-card h3 {
+    font-size: 1.5rem;
+    color: #23877B;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.highlight-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* 讲师介绍区域 */
+.instructor-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.instructor-card {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin-top: 30px;
+}
+
+.instructor-avatar {
+    flex-shrink: 0;
+}
+
+.instructor-avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid #23877B;
+    box-shadow: 0 10px 20px rgba(35, 135, 123, 0.3);
+}
+
+.instructor-info {
+    flex: 1;
+}
+
+.instructor-name {
+    font-size: 2rem;
+    color: #23877B;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.instructor-title {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.instructor-desc {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.instructor-achievements {
+    display: flex;
+    gap: 30px;
+}
+
+.achievement {
+    text-align: center;
+}
+
+.achievement-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #23877B;
+    margin-bottom: 5px;
+}
+
+.achievement-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 报名表单区域 */
+.registration-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.registration-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(35, 135, 123, 0.15);
+    border: 2px solid #23877B;
+}
+
+.registration-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.registration-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.price-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.original-price {
+    font-size: 1.2rem;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.current-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #e74c3c;
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.registration-form {
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #23877B;
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #23877B;
+    box-shadow: 0 0 0 3px rgba(35, 135, 123, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.error-message {
+    display: block;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #23877B 0%, #1a6a5f 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(35, 135, 123, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.btn-text {
+    flex: 1;
+    text-align: center;
+}
+
+.form-note {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 页脚 */
+.footer {
+    background: #23877B;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.footer p {
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        padding: 0 20px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+    
+    .countdown-timer {
+        padding: 12px 25px;
+    }
+    
+    .timer-number {
+        font-size: 1.3rem;
+    }
+    
+    .highlights-section,
+    .instructor-section,
+    .registration-section {
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .highlights-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .highlight-card {
+        padding: 30px 25px;
+    }
+    
+    .instructor-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 25px;
+        gap: 30px;
+    }
+    
+    .instructor-achievements {
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .registration-card {
+        padding: 30px 25px;
+        margin: 0 20px;
+    }
+    
+    .current-price {
+        font-size: 2rem;
+    }
+    
+    .form-group input {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    
+    .submit-btn {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .highlight-card {
+        padding: 25px 20px;
+    }
+    
+    .instructor-achievements {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .registration-card {
+        padding: 25px 20px;
+    }
+    
+    .current-price {
+        font-size: 1.8rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.highlight-card,
+.instructor-card,
+.registration-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.highlight-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.highlight-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* 成功提示样式 */
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+    border: 1px solid #c3e6cb;
+}
+
+/* 加载状态 */
+.submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI精英实战营 - 从入门到高薪就业</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F4C81', // 专业深蓝主色
+                        secondary: '#2D7DD2', // 辅助色
+                        neutral: '#F5F7FA', // 浅灰背景
+                        dark: '#2C3E50' // 深灰文字
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-sm {
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 25px -5px rgba(15,76,129,0.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-dark font-sans antialiased">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-primary flex items-center">
+                <i class="fa fa-robot mr-2"></i>
+                <span>AI精英实战营</span>
+            </div>
+            <button class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md transition-colors">
+                立即咨询
+            </button>
+        </div>
+    </header>
+
+    <!-- 主视觉区域 - 强钩子标题 -->
+    <section class="bg-gradient-to-r from-primary to-secondary text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow-sm mb-4">
+                30天掌握AI核心技能<br>让AI成为你的职场超级武器
+            </h1>
+            <p class="text-lg md:text-xl opacity-90 max-w-2xl mx-auto mb-8">
+                零基础可学 | 实战项目教学 | 学完即可落地应用
+            </p>
+            <div class="inline-block bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
+                <p class="text-lg font-medium">本期限时优惠：前50名立减1000元</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程亮点 -->
+    <section class="py-16 bg-neutral">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">课程核心亮点</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">专注实战落地，拒绝理论空谈，每一项技能都能直接用于工作</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 亮点1 -->
+                <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-graduation-cap text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">零基础入门</h3>
+                    <p class="text-gray-600">从基础概念到高阶应用，循序渐进教学，无任何基础也能轻松学会</p>
+                </div>
+
+                <!-- 亮点2 -->
+                <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-code text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">实战项目教学</h3>
+                    <p class="text-gray-600">10+真实商业项目实战，学完即可独立完成AI应用开发与落地</p>
+                </div>
+
+                <!-- 亮点3 -->
+                <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-users text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">1v1导师辅导</h3>
+                    <p class="text-gray-600">专属导师全程答疑，作业批改，针对性解决学习过程中的所有问题</p>
+                </div>
+
+                <!-- 亮点4 -->
+                <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-calendar-check-o text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">灵活学习时间</h3>
+                    <p class="text-gray-600">录播+直播结合，随时随地学习，支持无限次回放，不耽误工作生活</p>
+                </div>
+
+                <!-- 亮点5 -->
+                <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-certificate text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">结业证书</h3>
+                    <p class="text-gray-600">完成课程后颁发权威结业证书，为求职、升职加薪提供有力证明</p>
+                </div>
+
+                <!-- 亮点6 -->
+                <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-handshake-o text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">终身学习权益</h3>
+                    <p class="text-gray-600">一次报名，终身免费学习课程更新内容，紧跟AI技术发展潮流</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 报名表单 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto bg-neutral rounded-2xl p-8 md:p-10 shadow-lg">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-2 text-primary">立即抢占名额</h2>
+                    <p class="text-gray-600">填写以下信息，获取专属学习方案</p>
+                </div>
+
+                <form id="signupForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                        <input type="text" id="name" name="name" required 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition">
+                    </div>
+
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">手机号码</label>
+                        <input type="tel" id="phone" name="phone" required pattern="1[3-9]\d{9}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition">
+                    </div>
+
+                    <div>
+                        <label for="level" class="block text-sm font-medium text-gray-700 mb-1">AI基础水平</label>
+                        <select id="level" name="level" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition">
+                            <option value="">请选择你的基础</option>
+                            <option value="none">完全零基础</option>
+                            <option value="basic">了解基础概念</option>
+                            <option value="medium">有一定使用经验</option>
+                            <option value="advanced">想提升专业技能</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="purpose" class="block text-sm font-medium text-gray-700 mb-1">学习目标</label>
+                        <textarea id="purpose" name="purpose" rows="3"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
+                            placeholder="简述你想通过AI课程获得什么"></textarea>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full bg-primary hover:bg-secondary text-white font-medium py-4 rounded-lg transition-colors text-lg">
+                        提交报名信息
+                    </button>
+                    
+                    <p class="text-xs text-center text-gray-500 mt-4">
+                        我们承诺保护您的隐私，信息仅用于课程咨询服务
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">© 2026 AI精英实战营 版权所有</p>
+            <p class="text-sm opacity-70">专注AI职业教育，助力千万职场人提升核心竞争力</p>
+        </div>
+    </footer>
+
+    <!-- 表单提交脚本 -->
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 实际项目中可在这里添加表单提交逻辑
+            alert('报名信息提交成功！我们将尽快与你联系');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程报名</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #23877B 0%, #1a6b60 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .highlights {
+            padding: 60px 20px;
+            background: #f8fafa;
+        }
+
+        .highlights h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #23877B;
+            margin-bottom: 40px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .highlight-icon {
+            width: 64px;
+            height: 64px;
+            background: #23877B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .highlight-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .highlight-card h3 {
+            color: #23877B;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .instructor {
+            padding: 60px 20px;
+        }
+
+        .instructor-content {
+            display: flex;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .instructor-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #23877B 0%, #1a6b60 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .instructor-avatar svg {
+            width: 80px;
+            height: 80px;
+            fill: white;
+        }
+
+        .instructor-info h2 {
+            color: #23877B;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .instructor-info p {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .instructor-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .instructor-tag {
+            background: #e8f4f3;
+            color: #23877B;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .registration {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #23877B 0%, #1a6b60 100%);
+        }
+
+        .registration h2 {
+            text-align: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+        }
+
+        .form-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #ffd700;
+            color: #1a6b60;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: white;
+            padding: 40px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: #23877B;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 50px 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 400px;
+            }
+
+            .instructor-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .instructor-avatar {
+                width: 140px;
+                height: 140px;
+            }
+
+            .instructor-tags {
+                justify-content: center;
+            }
+
+            .registration {
+                padding: 40px 20px;
+            }
+
+            .registration h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>掌握核心技能，开启职业新篇章</h1>
+            <p>系统化学习，实战化训练，让你在最短时间内突破职业瓶颈</p>
+        </div>
+    </section>
+
+    <section class="highlights">
+        <div class="container">
+            <h2>课程亮点</h2>
+            <div class="highlight-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>系统化知识体系</h3>
+                    <p>从基础到进阶，构建完整的知识框架，循序渐进掌握核心技能</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>实战导师带班</h3>
+                    <p>行业资深导师全程陪伴，实时答疑解惑，深入浅出讲解要点</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <h3>真实项目驱动</h3>
+                    <p>动手实践真实项目，积累项目经验，提升解决实际问题能力</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="instructor">
+        <div class="container">
+            <div class="instructor-content">
+                <div class="instructor-avatar">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="instructor-info">
+                    <h2>讲师介绍</h2>
+                    <p><strong>张明远</strong> · 资深行业专家</p>
+                    <p>拥有15年行业从业经验，曾任职于多家知名企业，擅长将复杂知识简单化，培养了数千名优秀学员。</p>
+                    <div class="instructor-tags">
+                        <span class="instructor-tag">行业专家</span>
+                        <span class="instructor-tag">资深讲师</span>
+                        <span class="instructor-tag">实战派</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="registration">
+        <div class="container">
+            <h2>立即报名</h2>
+            <div class="form-wrapper">
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">手机号</label>
+                        <input type="tel" id="phone" name="phone" placeholder="请输入您的手机号" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">公司</label>
+                        <input type="text" id="company" name="company" placeholder="请输入您的公司名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="position">职位</label>
+                        <input type="text" id="position" name="position" placeholder="请输入您的职位">
+                    </div>
+                    <button type="submit" class="submit-btn">提交报名</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h3>报名成功！</h3>
+                    <p>我们已收到您的报名信息，稍后会有工作人员与您联系</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 课程报名平台. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
+            if (!name) {
+                alert('请输入姓名');
+                return;
+            }
+            
+            if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
+                alert('请输入正确的手机号');
+                return;
+            }
+            
+            document.getElementById('registrationForm').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI大模型导航中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #23877B;
+            --primary-dark: #1a6b61;
+            --primary-light: #e8f5f2;
+            --secondary: #6c63ff;
+            --accent: #ff6b6b;
+            --text: #1a1a2e;
+            --text-secondary: #555;
+            --bg: #f8fafa;
+            --white: #fff;
+            --card-bg: #ffffff;
+            --radius: 16px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 32px rgba(35, 135, 123, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 60px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            to { transform: translate(40px, 40px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            font-size: clamp(16px, 2.5vw, 20px);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* Model Grid */
+        .models-section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .model-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(35, 135, 123, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .model-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .model-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover .model-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .model-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .model-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .model-link {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .model-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(35, 135, 123, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px 30px;
+            }
+            
+            .models-section {
+                padding: 60px 20px;
+            }
+            
+            .models-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .model-card {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>🤖 AI大模型导航中心</h1>
+                <p>探索各种前沿AI模型，开启智能时代新征程</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="models-section">
+        <div class="container">
+            <h2 class="section-title">选择您要探索的AI模型</h2>
+            <p class="section-subtitle">点击下方卡片进入对应的AI模型页面，体验不同的智能服务</p>
+            
+            <div class="models-grid">
+                <!-- Claude -->
+                <div class="model-card">
+                    <div class="model-icon">🧠</div>
+                    <h3>Claude AI</h3>
+                    <p>Anthropic开发的先进AI助手，专注于安全、有帮助的对话体验</p>
+                    <a href="claude/index.html" class="model-link">进入 Claude</a>
+                </div>
+
+                <!-- DeepSeek -->
+                <div class="model-card">
+                    <div class="model-icon">🔍</div>
+                    <h3>DeepSeek</h3>
+                    <p>深度求索AI，强大的中文理解和生成能力，支持长文本对话</p>
+                    <a href="deepseek/index.html" class="model-link">进入 DeepSeek</a>
+                </div>
+
+                <!-- 豆包 -->
+                <div class="model-card">
+                    <div class="model-icon">🎯</div>
+                    <h3>豆包 AI</h3>
+                    <p>字节跳动开发的AI助手，提供智能对话和内容创作服务</p>
+                    <a href="doubao/index.html" class="model-link">进入 豆包</a>
+                </div>
+
+                <!-- GPT-5.4 -->
+                <div class="model-card">
+                    <div class="model-icon">🌟</div>
+                    <h3>GPT-5.4</h3>
+                    <p>OpenAI最新一代语言模型，强大的多模态理解和生成能力</p>
+                    <a href="gpt5.4/index.html" class="model-link">进入 GPT-5.4</a>
+                </div>
+
+                <!-- Kimi -->
+                <div class="model-card">
+                    <div class="model-icon">📚</div>
+                    <h3>Kimi AI</h3>
+                    <p>专注于知识问答和文档处理的AI助手，强大的信息检索能力</p>
+                    <a href="kimi/index.html" class="model-link">进入 Kimi</a>
+                </div>
+
+                <!-- MiniMax -->
+                <div class="model-card">
+                    <div class="model-icon">⚡</div>
+                    <h3>MiniMax AI</h3>
+                    <p>轻量高效的AI模型，提供快速的智能对话和内容生成服务</p>
+                    <a href="minimax/index.html" class="model-link">进入 MiniMax</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 AI大模型导航中心 | 探索人工智能的无限可能</p>
+        </div>
+    </footer>
+</body>
+</html>

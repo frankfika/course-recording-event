@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模型评分表</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: oklch(0.59 0.24 264);
+      --color-primary-hover: oklch(0.48 0.24 264);
+      --color-secondary: oklch(0.52 0.24 290);
+      --color-success: oklch(0.72 0.19 152);
+      --color-warning: oklch(0.74 0.18 62);
+      --color-danger: oklch(0.57 0.26 12);
+      --color-bg: oklch(0.96 0.005 264);
+      --color-surface: oklch(1 0 0 / 0.72);
+      --color-text-1: oklch(0.15 0.01 264);
+      --color-text-2: oklch(0.30 0.01 264);
+      --color-text-3: oklch(0.62 0.01 264);
+      --color-border: oklch(0.55 0 0 / 0.16);
+      --glass-bg: oklch(1 0 0 / 0.6);
+      --glass-border: oklch(1 0 0 / 0.5);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-2xl: 24px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+      --shadow-glass: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --ease-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: oklch(0.12 0.01 264);
+        --color-surface: oklch(0.18 0.01 264 / 0.8);
+        --color-text-1: oklch(0.97 0.005 264);
+        --color-text-2: oklch(0.72 0.01 264);
+        --color-text-3: oklch(0.45 0.01 264);
+        --color-border: oklch(1 0 0 / 0.1);
+        --glass-bg: oklch(0.15 0.005 264 / 0.7);
+        --glass-border: oklch(1 0 0 / 0.08);
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text-1);
+      line-height: 1.6;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* Aurora Background */
+    .aurora-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .aurora-bg::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, oklch(0.59 0.24 264 / 0.15) 0%, transparent 70%);
+      animation: aurora-drift 20s ease-in-out infinite;
+    }
+    .aurora-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 60vw;
+      height: 50vh;
+      background: radial-gradient(ellipse at center, oklch(0.52 0.24 290 / 0.12) 0%, transparent 70%);
+      animation: aurora-drift 25s ease-in-out infinite reverse;
+    }
+    @keyframes aurora-drift {
+      0%, 100% { transform: translateX(-50%) translate(0, 0); }
+      50% { transform: translateX(-50%) translate(5%, 8%); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInUp 0.8s var(--ease-smooth) both;
+    }
+    .header h1 {
+      font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .header p {
+      color: var(--color-text-2);
+      font-size: 1.125rem;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-glass);
+      transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem);
+      font-weight: 600;
+      color: var(--color-text-1);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-title .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .card-subtitle {
+      color: var(--color-text-3);
+      font-size: 0.9375rem;
+      margin-bottom: 16px;
+    }
+
+    /* Criteria List */
+    .criteria-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .criteria-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      font-size: 0.875rem;
+      color: var(--color-text-2);
+      transition: all 0.2s var(--ease-smooth);
+    }
+    .criteria-item:hover {
+      background: color-mix(in oklch, var(--color-primary) 8%, transparent);
+      border-color: color-mix(in oklch, var(--color-primary) 30%, transparent);
+      color: var(--color-text-1);
+    }
+    .criteria-item::before {
+      content: '✓';
+      color: var(--color-success);
+      font-weight: 600;
+    }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+    thead {
+      background: linear-gradient(135deg, color-mix(in oklch, var(--color-primary) 8%, transparent) 0%, color-mix(in oklch, var(--color-secondary) 8%, transparent) 100%);
+    }
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-text-1);
+      border-bottom: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-2);
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+    tbody tr {
+      transition: background 0.2s var(--ease-smooth);
+    }
+    tbody tr:hover {
+      background: color-mix(in oklch, var(--color-primary) 4%, transparent);
+    }
+
+    /* Score highlight */
+    .score {
+      font-weight: 700;
+      color: var(--color-text-1);
+    }
+    .score.high {
+      color: var(--color-success);
+    }
+    .score.na {
+      color: var(--color-text-3);
+      font-style: italic;
+    }
+
+    /* Model name */
+    .model-name {
+      font-weight: 600;
+      color: var(--color-text-1);
+    }
+
+    /* Comment cell */
+    .comment {
+      max-width: 280px;
+      font-size: 0.875rem;
+    }
+
+    /* N/A indicator */
+    .na-cell {
+      color: var(--color-text-3);
+      font-style: italic;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+      margin: 40px 0;
+    }
+
+    /* Key Findings */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .finding-item {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      transition: all 0.2s var(--ease-smooth);
+    }
+    .finding-item:hover {
+      border-color: color-mix(in oklch, var(--color-primary) 30%, transparent);
+      transform: translateX(4px);
+    }
+    .finding-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .finding-text {
+      color: var(--color-text-2);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+    .finding-text strong {
+      color: var(--color-text-1);
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 16px 20px;
+      background: color-mix(in oklch, var(--color-warning) 8%, transparent);
+      border-radius: var(--radius-md);
+      border: 1px solid color-mix(in oklch, var(--color-warning) 20%, transparent);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      color: var(--color-text-2);
+    }
+    .legend-item strong {
+      color: var(--color-text-1);
+    }
+
+    /* Comprehensive Score Card */
+    .comprehensive-card {
+      background: linear-gradient(135deg, color-mix(in oklch, var(--color-primary) 5%, transparent) 0%, color-mix(in oklch, var(--color-secondary) 5%, transparent) 100%);
+    }
+    .comprehensive-card .card-title {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Winner highlight */
+    .winner-row {
+      background: color-mix(in oklch, var(--color-success) 8%, transparent) !important;
+    }
+    .winner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      background: var(--color-success);
+      color: white;
+      border-radius: var(--radius-2xl);
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 24px 16px 60px;
+      }
+      .card {
+        padding: 20px;
+        border-radius: var(--radius-lg);
+      }
+      .card-title {
+        font-size: 1.25rem;
+      }
+      th, td {
+        padding: 12px 14px;
+      }
+      .comment {
+        max-width: 200px;
+        font-size: 0.8125rem;
+      }
+      .criteria-list {
+        gap: 8px;
+      }
+      .criteria-item {
+        font-size: 0.8125rem;
+        padding: 6px 12px;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Stagger animation */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+
+    [data-scroll-reveal] {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+    }
+    [data-scroll-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora-bg"></div>
+
+  <div class="container">
+    <header class="header">
+      <h1>模型评分表</h1>
+      <p>AI 模型能力对比评估 · 写作与逻辑推理双轮测试</p>
+    </header>
+
+    <!-- Round 1: Writing -->
+    <section class="card stagger-1" data-scroll-reveal>
+      <div class="card-header">
+        <h2 class="card-title">
+          <span class="badge">1</span>
+          Round 1: 写作（营销邮件）
+        </h2>
+        <p class="card-subtitle">评估 AI 模型撰写营销邮件的能力</p>
+        <div class="criteria-list">
+          <span class="criteria-item">语气得体，不油腻不喊口号</span>
+          <span class="criteria-item">180字以内，能直接发</span>
+          <span class="criteria-item">有行动感，读完想点链接</span>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>模型</th>
+              <th>得体性</th>
+              <th>字数控制</th>
+              <th>行动感</th>
+              <th>总分</th>
+              <th>简评</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="model-name">Claude</td>
+              <td>8</td>
+              <td>7</td>
+              <td>8</td>
+              <td class="score high">23</td>
+              <td class="comment">语言干练，有温度，直接可发</td>
+            </tr>
+            <tr class="winner-row">
+              <td class="model-name">DeepSeek <span class="winner-badge">最高分</span></td>
+              <td>9</td>
+              <td>9</td>
+              <td>7</td>
+              <td class="score high">25</td>
+              <td class="comment">极简风格，150字内，但行动号召偏弱</td>
+            </tr>
+            <tr>
+              <td class="model-name">Doubao</td>
+              <td>7</td>
+              <td>6</td>
+              <td>8</td>
+              <td class="score">21</td>
+              <td class="comment">内容偏长（400+字），[姓名]等占位符未填充</td>
+            </tr>
+            <tr>
+              <td class="model-name">GPT-5.4</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="score na">N/A</td>
+              <td class="comment">答非所问（输出了Round2排课题）</td>
+            </tr>
+            <tr>
+              <td class="model-name">Kimi</td>
+              <td>8</td>
+              <td>8</td>
+              <td>7</td>
+              <td class="score">23</td>
+              <td class="comment">结构清晰，但行动号召不够直接</td>
+            </tr>
+            <tr>
+              <td class="model-name">MiniMax</td>
+              <td>8</td>
+              <td>6</td>
+              <td>9</td>
+              <td class="score">23</td>
+              <td class="comment">故事感强，有具体案例，但字数偏多（200+）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Round 2: Logic -->
+    <section class="card stagger-2" data-scroll-reveal>
+      <div class="card-header">
+        <h2 class="card-title">
+          <span class="badge">2</span>
+          Round 2: 逻辑推理（排课问题）
+        </h2>
+        <p class="card-subtitle">评估 AI 模型解决复杂约束问题的能力</p>
+        <div class="criteria-list">
+          <span class="criteria-item">所有约束是否全部满足</span>
+          <span class="criteria-item">有无遗漏或冲突</span>
+          <span class="criteria-item">推理过程是否清晰可追溯</span>
+          <span class="criteria-item">输出格式是否结构化</span>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>模型</th>
+              <th>约束满足</th>
+              <th>冲突遗漏</th>
+              <th>推理清晰度</th>
+              <th>格式结构</th>
+              <th>总分</th>
+              <th>简评</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="winner-row">
+              <td class="model-name">Claude <span class="winner-badge">满分</span></td>
+              <td>10</td>
+              <td>10</td>
+              <td>9</td>
+              <td>9</td>
+              <td class="score high">38</td>
+              <td class="comment">完全正确，方案完整，约束验证详尽</td>
+            </tr>
+            <tr>
+              <td class="model-name">DeepSeek</td>
+              <td>8</td>
+              <td>8</td>
+              <td>9</td>
+              <td>7</td>
+              <td class="score">32</td>
+              <td class="comment">认为无解（错误），但推理过程严谨</td>
+            </tr>
+            <tr class="winner-row">
+              <td class="model-name">Doubao <span class="winner-badge">满分</span></td>
+              <td>10</td>
+              <td>10</td>
+              <td>8</td>
+              <td>10</td>
+              <td class="score high">38</td>
+              <td class="comment">完全正确，表格规范，约束验证完整</td>
+            </tr>
+            <tr>
+              <td class="model-name">GPT-5.4</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="score na">N/A</td>
+              <td class="comment">答非所问（输出了Round1营销邮件）</td>
+            </tr>
+            <tr>
+              <td class="model-name">Kimi</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="na-cell">-</td>
+              <td class="score na">N/A</td>
+              <td class="comment">答非所问（输出了Round1营销邮件）</td>
+            </tr>
+            <tr>
+              <td class="model-name">MiniMax</td>
+              <td>6</td>
+              <td>7</td>
+              <td>6</td>
+              <td>6</td>
+              <td class="score">25</td>
+              <td class="comment">方案存在内部矛盾，最终自我推翻为"无解"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Comprehensive Score -->
+    <section class="card comprehensive-card stagger-3" data-scroll-reveal>
+      <div class="card-header">
+        <h2 class="card-title">综合评分</h2>
+        <p class="card-subtitle">双轮测试总分排名（满分70分）</p>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>排名</th>
+              <th>模型</th>
+              <th>Round1 写作</th>
+              <th>Round2 推理</th>
+              <th>综合得分</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="winner-row">
+              <td class="score high">🥇 1</td>
+              <td class="model-name">Claude</td>
+              <td>23</td>
+              <td>38</td>
+              <td class="score high">61</td>
+              <td class="comment">双项均表现优秀，稳定发挥</td>
+            </tr>
+            <tr>
+              <td class="score">🥈 2</td>
+              <td class="model-name">Doubao</td>
+              <td>21</td>
+              <td>38</td>
+              <td class="score high">59</td>
+              <td class="comment">双项均正确，格式规范</td>
+            </tr>
+            <tr>
+              <td class="score">🥉 3</td>
+              <td class="model-name">DeepSeek</td>
+              <td>25</td>
+              <td>32</td>
+              <td class="score">57</td>
+              <td class="comment">写作简洁，推理有小瑕疵</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td class="model-name">MiniMax</td>
+              <td>23</td>
+              <td>25</td>
+              <td class="score">48</td>
+              <td class="comment">写作不错，推理有明显缺陷</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td class="model-name">Kimi</td>
+              <td>23</td>
+              <td class="na-cell">N/A</td>
+              <td class="score">23</td>
+              <td class="comment">仅完成写作任务</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td class="model-name">GPT-5.4</td>
+              <td class="na-cell">N/A</td>
+              <td class="na-cell">N/A</td>
+              <td class="score na">0</td>
+              <td class="comment">两轮均答非所问</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend" style="margin-top: 20px;">
+        <div class="legend-item"><strong>满分：</strong>Round1 最高30分，Round2 最高40分，综合满分70分</div>
+        <div class="legend-item"><strong>N/A：</strong>该轮任务未完成或答非所问，计0分</div>
+        <div class="legend-item"><strong>评分维度：</strong>各维度1-10分，最后换算到各轮满分区间</div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Key Findings -->
+    <section class="card stagger-4" data-scroll-reveal>
+      <div class="card-header">
+        <h2 class="card-title">关键发现</h2>
+      </div>
+      <div class="findings-grid">
+        <div class="finding-item">
+          <span class="finding-num">1</span>
+          <p class="finding-text"><strong>Claude 和 Doubao</strong> 在逻辑推理题中表现最佳，给出了完全正确的排课方案</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">2</span>
+          <p class="finding-text"><strong>DeepSeek</strong> 虽然结论错误（认为无解），但推理过程最严谨，展现了较强的分析能力</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">3</span>
+          <p class="finding-text"><strong>任务理解能力差异明显：</strong>GPT-5.4 和 Kimi 在两轮中均出现了任务混淆</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">4</span>
+          <p class="finding-text"><strong>写作风格分化：</strong>DeepSeek 偏极简风，MiniMax 偏故事型，Claude 和 Doubao 偏均衡</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Scroll reveal animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('[data-scroll-reveal]').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
